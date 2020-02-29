@@ -14,6 +14,8 @@ stages:
 test:
   stage: test
   script:
+    - cp .env.example .env
+    - adonis key:generate
     - adonis migration:run --env testing
     - adonis seed --env testing
     - adonis test
