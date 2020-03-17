@@ -1,3 +1,9 @@
+# Plataforma de Detecção de Talhões
+
+## Equipe
+Bruno Henrique, Iago Cardial, Matheus Vilela, Mayra Bernardes, Willyan Antunes;
+
+
 # Adonis fullstack application
 
 This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
