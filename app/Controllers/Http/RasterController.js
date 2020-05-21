@@ -23,7 +23,7 @@ class RasterController {
         throw new Error(error.message)
       }
 
-      const Key = `raster-${(Math.random() * 100).toString(32)}`
+      const Key = `raster-${(Math.random() * 50).toString(32)}`
 
       // upload file to s3
       await Drive.put(Key, file.stream, {
