@@ -15,7 +15,4 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
-
-Route.group(() => {
-  Route.get('/', () => ({ name: 'Detector de talhões' }))
-}).prefix('api/v1')
+Route.resource('/files', 'RasterController')
