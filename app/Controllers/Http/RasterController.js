@@ -4,35 +4,35 @@ const Drive = use('Drive')
 
 class RasterController {
   async store ({ request }) {
-    // upload rules
+    // regras sobre o tipo de arquivo
     const validationOptions = {
       types: ['jp2', 'tiff'],
-      size: '5mb'
+      size: '100mb'
     }
 
     request.multipart.file('image', validationOptions, async file => {
-    // set file size from stream byteCount, so adonis can validate file size
+    // validação do tamanho do arquivo
       file.size = file.stream.byteCount
 
-      // run validation rules
+      // validação do arquivo
       await file.runValidations()
 
-      // catches validation errors, if any and then throw exception
+      // messagens de erro
       const error = file.error()
       if (error.message) {
         throw new Error(error.message)
       }
 
-      const Key = `raster-${(Math.random() * 50).toString(32)}`
+      const Name = file.clientName
 
-      // upload file to s3
-      await Drive.put(Key, file.stream, {
+      // upload do arquivo para o  s3
+      await Drive.put(Name, file.stream, {
         ContentType: file.headers['content-type'],
         ACL: 'public-read'
       })
     })
 
-    // You must call this to start processing uploaded file
+    // Devemos chamar o process para começar a processar o arquivo carregado
     await request.multipart.process()
 
     return 'done'
