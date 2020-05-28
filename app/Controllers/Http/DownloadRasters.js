@@ -7,13 +7,15 @@ const path = use('path')
 const crypto = use('crypto')
 
 class DownloadRasters {
-  async index ({ response }) {
-    const coords = '-23.21082162580377%20-45.916500091552734,-23.220208448140895%20-45.91830253601074,-23.222732523114207%20-45.90414047241211,-23.21263593700573%20-45.901994705200195,-23.21082162580377%20-45.916500091552734'
-    const b02 = await this.getRaster('B02', coords)
-    const b03 = await this.getRaster('B03', coords)
-    const b04 = await this.getRaster('B04', coords)
-    const b08 = await this.getRaster('B08', coords)
-    response.json({ status: true, date: new Date(), names: { b02, b03, b04, b08 } })
+  async index ({ response, request }) {
+    const coords = request.input('coords')
+    const getCoords = coords
+    const b02 = await this.getRaster('B02', getCoords)
+    const b03 = await this.getRaster('B03', getCoords)
+    const b04 = await this.getRaster('B04', getCoords)
+    const b08 = await this.getRaster('B08', getCoords)
+    const ndvi = await this.getRaster('NDVI', getCoords)
+    response.json({ status: true, date: new Date(), names: { b02, b03, b04, b08, ndvi } })
   }
 
   async getRaster (band, coords) {
@@ -21,8 +23,8 @@ class DownloadRasters {
     const folderName = path.resolve(__dirname, '../../../tmp')
     const name = crypto.randomBytes(8).toString('hex')
     await this.download(url, folderName, name)
-    await this.uploadToAws(name, `${folderName}/${name}.tif`)
-    fs.unlinkSync(`${folderName}/${name}.tif`)
+    await this.uploadToAws(name, `${folderName}/${name}.tiff`)
+    fs.unlinkSync(`${folderName}/${name}.tiff`)
 
     return name
   }
@@ -44,7 +46,7 @@ class DownloadRasters {
 
   streamToFolder (folderName, name, res) {
     return new Promise((resolve, reject) => {
-      const stream = res.data.pipe(fs.createWriteStream(`${folderName}/${name}.tif`))
+      const stream = res.data.pipe(fs.createWriteStream(`${folderName}/${name}.tiff`))
       stream.on('finish', resolve)
       stream.on('error', reject)
     })
@@ -52,9 +54,8 @@ class DownloadRasters {
 
   async uploadToAws (name, filePath) {
     const file = fs.createReadStream(filePath)
-
-    await Drive.put(name, file, {
-      ContentType: 'image/tif',
+    await Drive.put(`${name}.tiff`, file, {
+      ContentType: 'image/tiff',
       ACL: 'public-read'
     })
   }
