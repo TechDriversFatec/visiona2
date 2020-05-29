@@ -3,6 +3,7 @@
 /** @type {import('@adonisjs/framework/src/Server')} */
 const Server = use('Server')
 
+
 /*
 |--------------------------------------------------------------------------
 | Global Middleware
@@ -17,7 +18,8 @@ const globalMiddleware = [
   'Adonis/Middleware/Session',
   'Adonis/Middleware/Shield',
   'Adonis/Middleware/AuthInit',
-  'App/Middleware/ConvertEmptyStringsToNull'
+  'App/Middleware/ConvertEmptyStringsToNull',
+  'Adonis/Middleware/Shield'
 ]
 
 /*
@@ -61,3 +63,4 @@ Server
   .registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
   .use(serverMiddleware)
+  .use(['Adonis/Middleware/Cors'])
