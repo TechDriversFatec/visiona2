@@ -133,7 +133,7 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: ['/api/v1/files']
+    processManually: ['/api/v1/files', '/api/v1/download']
 
     /*
     |--------------------------------------------------------------------------

@@ -1,23 +1,26 @@
 module.exports = {
-  "env": {
-    "node": true
+  env: {
+    node: true,
   },
-  "parserOptions": {
-    "ecmaVersion": 2017
+  parserOptions: {
+    ecmaVersion: 2017,
   },
-  "extends": "airbnb-base",
-  "rules": {
-    "strict": "off",
-    "semi": ["error", "never"],
+  extends: ["prettier", "airbnb-base"],
+  rules: {
+    strict: "off",
+    semi: ["error", "never"],
     "comma-dangle": ["error", "never"],
-    "space-before-function-paren": ["error", { "anonymous": "never", "named": "always" }],
+    "space-before-function-paren": [
+      "error",
+      { anonymous: "never", named: "always" },
+    ],
     "class-methods-use-this": "off",
-    "object-curly-newline": ["error", { "multiline": true }],
+    "object-curly-newline": ["error", { multiline: true }],
     "global-require": "off",
     "arrow-parens": ["error", "as-needed"],
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { props: false }],
   },
-  "globals": {
-    "use": true
-  }
-}
+  globals: {
+    use: true,
+  },
+};

@@ -19,4 +19,5 @@ Route.on('/').render('welcome')
 Route.group(() => {
   Route.get('/', () => ({ name: 'Detector de talhões' }))
   Route.resource('/files', 'RasterController')
+  Route.get('/download', 'DownloadRasters.index')
 }).prefix('api/v1')
