@@ -8,14 +8,31 @@ const crypto = use('crypto')
 
 class DownloadRasters {
   async index ({ response, request }) {
-    const coords = request.input('coords')
-    const getCoords = coords
-    const b02 = await this.getRaster('B02', getCoords)
-    const b03 = await this.getRaster('B03', getCoords)
-    const b04 = await this.getRaster('B04', getCoords)
-    const b08 = await this.getRaster('B08', getCoords)
-    const ndvi = await this.getRaster('NDVI', getCoords)
-    response.json({ status: true, date: new Date(), names: { b02, b03, b04, b08, ndvi } })
+    try {
+      console.log('Iniciou')
+      const coords = request.input('coords')
+      const getCoords = coords
+      console.log('Baixando rasters')
+      const b02 = await this.getRaster('B02', getCoords)
+      const b03 = await this.getRaster('B03', getCoords)
+      const b04 = await this.getRaster('B04', getCoords)
+      const b08 = await this.getRaster('B08', getCoords)
+      const ndvi = await this.getRaster('NDVI', getCoords)
+      console.log('Enviando para ia')
+      const iaResponse = await this.sendToIa({ b02, b03, b04, b08, ndvi })
+      response.json({
+        status: true,
+        date: new Date(),
+        names: iaResponse
+      })
+    } catch (error) {
+      console.log(error)
+      response.status(500).json({
+        status: false,
+        date: new Date(),
+        names: 'InternalServerError'
+      })
+    }
   }
 
   async getRaster (band, coords) {
@@ -46,10 +63,23 @@ class DownloadRasters {
 
   streamToFolder (folderName, name, res) {
     return new Promise((resolve, reject) => {
-      const stream = res.data.pipe(fs.createWriteStream(`${folderName}/${name}.tiff`))
+      const stream = res.data.pipe(
+        fs.createWriteStream(`${folderName}/${name}.tiff`)
+      )
       stream.on('finish', resolve)
       stream.on('error', reject)
     })
+  }
+
+  async sendToIa ({ b02, b03, b04, b08, ndvi } = {}) {
+    const { data } = await axios.post(`${process.env.IA_ENDPOINT}/predict`, {
+      b02,
+      b03,
+      b04,
+      b08,
+      ndvi
+    })
+    return data
   }
 
   async uploadToAws (name, filePath) {
