@@ -12,12 +12,12 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use('Route');
 
-Route.on('/').render('welcome')
+Route.on('/').render('welcome');
 
 Route.group(() => {
-  Route.get('/', () => ({ name: 'Detector de talhões' }))
-  Route.resource('/files', 'RasterController')
-  Route.get('/download', 'DownloadRasters.index')
-}).prefix('api/v1')
+  Route.get('/', () => ({ name: 'Detector de talhões' }));
+  Route.resource('/files', 'RasterController');
+  Route.get('/download', 'DownloadRasters.index');
+}).prefix('api/v1');
