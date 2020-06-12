@@ -4,7 +4,7 @@ const STAT_SPEC_URL = 'https://sat-api.developmentseed.org/stac/search';
 const axios = use('axios');
 
 class CatalogController {
-  async search({ response, request }) {
+  async search({ request }) {
     const {
       dateInit,
       dateEnd,
