@@ -20,4 +20,9 @@ Route.group(() => {
   Route.get('/', () => ({ name: 'Detector de talhões' }));
   Route.resource('/files', 'RasterController');
   Route.get('/download', 'DownloadRasters.index');
+  Route.get('/catalog', 'CatalogController.search');
+  Route.get(
+    '/catalog/:catalog_id/:scene_id/:band',
+    'CatalogController.getBand'
+  );
 }).prefix('api/v1');

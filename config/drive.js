@@ -44,5 +44,12 @@ module.exports = {
       bucket: Env.get('S3_BUCKET'),
       region: Env.get('S3_REGION'),
     },
+    sentinel: {
+      driver: 's3',
+      key: Env.get('S3_KEY'),
+      secret: Env.get('S3_SECRET'),
+      bucket: Env.get('SENTINEL_BUCKET'),
+      region: Env.get('SENTINEL_REGION'),
+    },
   },
 };
