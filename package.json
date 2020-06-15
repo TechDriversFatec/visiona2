@@ -30,6 +30,7 @@
     "@adonisjs/vow": "^1.0.17",
     "aws-sdk": "^2.682.0",
     "axios": "^0.19.2",
+    "crypto-js": "^4.0.0",
     "sqlite3": "^4.1.1"
   },
   "autoload": {

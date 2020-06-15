@@ -1,6 +1,6 @@
 'use strict';
 
-const STAT_SPEC_URL = 'https://sat-api.developmentseed.org/stac/search';
+const STAT_API = 'https://sat-api.developmentseed.org';
 const axios = use('axios');
 
 class CatalogController {
@@ -45,7 +45,10 @@ class CatalogController {
       page,
       limit: 10,
     };
-    const { data } = await axios.default.post(STAT_SPEC_URL, requestData);
+    const { data } = await axios.default.post(
+      `${STAT_API}/stac/search`,
+      requestData
+    );
     return this.normalizeCatalogData({ data });
   }
 
@@ -82,6 +85,38 @@ class CatalogController {
         collection,
       };
     });
+  }
+
+  async getBand({ params, response }) {
+    const { catalog_id: catalogId, scene_id: sceneId, band } = params;
+    const scene = await this.getScene(catalogId, sceneId);
+    const bands = this.extractSceneBands(scene);
+    const { href } = bands.filter(({ name }) => name === band)[0];
+    response.redirect(href);
+  }
+
+  async getScene(catalogId, sceneId) {
+    const { data } = await axios.default.get(
+      `${STAT_API}/collections/${catalogId}/items/${sceneId}`
+    );
+    return data;
+  }
+
+  extractSceneBands(scene) {
+    const {
+      properties: { collection },
+      assets,
+    } = scene;
+    let bandNames;
+    const resultNames = ['B02', 'B03', 'B04', 'B08'];
+    if (collection === 'landsat-8-l1') {
+      bandNames = ['B2', 'B3', 'B4', 'B8'];
+    } else {
+      bandNames = [...resultNames];
+    }
+    return bandNames
+      .map((name) => assets[name].href)
+      .map((href, id) => ({ name: resultNames[id], href }));
   }
 }
 
