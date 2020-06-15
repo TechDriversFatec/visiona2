@@ -5,17 +5,17 @@
 #
 
 ### Entregas
-### [- Gerenciamento da Sprint - Burn Down e Custo](https://drive.google.com/open?id=18nxotizbgWOUV79GEEmgSKg7JJiXPh1RW-djI0H_5po)
+### [- Gerenciamento da Sprint - Burn Down e Custo](https://docs.google.com/spreadsheets/d/18nxotizbgWOUV79GEEmgSKg7JJiXPh1RW-djI0H_5po/edit?usp=sharing)
 
-### [- Priorização Ágil do Projeto](https://drive.google.com/open?id=1fPgkGqo3wlhHqdagS5zdr_9R37E_ryQD)
+### [- Priorização Ágil do Projeto](https://drive.google.com/file/d/1coPe5WSlf4Z6aESZTwiY6y2t_J95KEWr/view?usp=sharing)
 
-### [- Entrega 3 - 29-05-2020](https://drive.google.com/drive/folders/1T9M7tOpUUz0_yKG-bx7DxeZ2GFKUhSbj?usp=sharing)
-- Construção de api para IA, que receba e recorte AOI no raster file, faça a predição e retorne a máscara binária.
-- Atualização no backend para que ele consulte o serviço da IA
-- Desenvolvimento de página para predição de talhoes, contendo o componente para selecionar AOI e um modal para selecionar raster e enviar para o backend.
-- Estabelecer uma consulta a uma API que retorne todos os raster que contenham o polígono estabelecido.
+### [- Entrega 4 - 14-06-2020](https://drive.google.com/drive/folders/1T9M7tOpUUz0_yKG-bx7DxeZ2GFKUhSbj?usp=sharing)
+- Construção de API própria, do zero, para acesso e manipulação das imagens de satélite.
+- Atualização no backend e front-end para concordância com a nova API.
+- Desenvolvimento do catálogo de imagens, com metadados disponíveis.
+- Atualizar camada de visualização do mapa.
 
-### [- Todos os Arquivos do Projeto](https://drive.google.com/open?id=1VwCP69CIkUA82ie0dcBAwo4NLiBk8iC7)
+### [- Todos os Arquivos do Projeto](https://drive.google.com/drive/folders/1VwCP69CIkUA82ie0dcBAwo4NLiBk8iC7?usp=sharing)
 #
 
 # Adonis fullstack application
