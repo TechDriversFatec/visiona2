@@ -25,11 +25,11 @@ class CatalogController {
     };
   }
 
-  async getCatalog({ dateInit, dateEnd, cloudCover, page, bbox }) {
+  async getCatalog({ dateInit, dateEnd, cloudCover, page, bbox, intersects }) {
     const requestData = {
-      bbox, // [-110, 39.5, -105, 40.5],
+      bbox,
       time: `${dateInit.toISOString()}/${dateEnd.toISOString()}`, // '2020-01-01T00:00:00Z/2020-06-09T00:00:00Z',
-      intersects: null,
+      intersects,
       query: {
         'eo:cloud_cover': {
           lt: cloudCover,
@@ -117,6 +117,17 @@ class CatalogController {
     return bandNames
       .map((name) => assets[name].href)
       .map((href, id) => ({ name: resultNames[id], href }));
+  }
+
+  searchGeoJSON({ request }) {
+    const { dateInit, dateEnd, cloudCover, page, geojson } = request.post();
+    return this.getCatalog({
+      dateEnd: new Date(dateEnd),
+      dateInit: new Date(dateInit),
+      cloudCover,
+      page,
+      intersects: geojson,
+    });
   }
 }
 
