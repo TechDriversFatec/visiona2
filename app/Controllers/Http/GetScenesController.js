@@ -8,12 +8,12 @@ class GetScenesController {
       cloudCover,
       dateEnd,
       dateInit,
-      ids,
+      listIds,
     } = request.post();
     const cloud = cloudCover
     const endDate = dateEnd
     const initDate = dateInit
-    const onId = ids
+    const onId = listIds
     const value = this.normalizeScenes({cloud, endDate, initDate, onId})
     const { data } = await axios.post(`${process.env.IA_ENDPOINT}/generate-mask`, value);
     
