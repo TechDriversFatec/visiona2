@@ -1,6 +1,5 @@
 'use strict';
 
-// const STAT_API = 'https://sat-api.developmentseed.org';s
 const axios = use('axios');
 
 class GetScenesController {
@@ -15,9 +14,10 @@ class GetScenesController {
     const endDate = dateEnd
     const initDate = dateInit
     const onId = ids
-    const a = this.normalizeScenes({cloud, endDate, initDate, onId})
-    console.log(a)
-
+    const value = this.normalizeScenes({cloud, endDate, initDate, onId})
+    const { data } = await axios.post(`${process.env.IA_ENDPOINT}/generate-mask`, value);
+    
+    return {message:'ok'}
   }
 
   normalizeScenes({cloud, endDate, initDate, onId}) {
